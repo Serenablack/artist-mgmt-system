@@ -8,25 +8,25 @@ import {
 } from "@mui/material";
 
 import { useState } from "react";
+import { loginUser } from "@services/loginService";
+import { useRouter } from "next/router";
 
 const HomePage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   // const dispatch = useDispatch();
+  const { push } = useRouter();
   const handleLogin = async (event) => {
     event.preventDefault();
-    //     // const user = await loginServ.create({
-    //     //   userName,
-    //     //   password,
-    // });
+    const user = await loginUser({
+      email,
+      password,
+    });
+    console.log(user);
 
-    //     // if (user) {
-    //     //   dispatch(loginUser(user));
-    //     //   dispatch(initializeCart());
-    //     // }
     setEmail("");
     setPassword("");
-    // push("/");
+
+    push("/home");
   };
 
   return (

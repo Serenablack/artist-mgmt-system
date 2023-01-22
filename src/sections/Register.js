@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/router";
+import { createUser } from "@services/userService";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function Register() {
   const { push } = useRouter();
@@ -22,7 +24,7 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await registrService.register({
+      await createUser({
         firstName,
         lastName,
         email,
@@ -130,17 +132,20 @@ export default function Register() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="gender"
-                label="Gender"
-                type="gender"
-                id="gender"
-                autoComplete="gender"
-                value={gender}
-                onChange={({ target }) => setGender(target.value)}
-              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={gender}
+                  label="Age"
+                  onChange={(event) => setGender(event.target.value)}
+                >
+                  <MenuItem value={"m"}>Male</MenuItem>
+                  <MenuItem value={"f"}>Female</MenuItem>
+                  <MenuItem value={"o"}>Other</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <TextField
