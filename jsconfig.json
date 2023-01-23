@@ -3,7 +3,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@redux/*": ["src/redux/*"],
+
       "@sections/*": ["src/sections/*"],
+      "@services/*": ["src/services/*"],
+      "@components/*":["src/components/*"],
     }
   }
 }
