@@ -8,7 +8,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/router";
 import { createUser } from "@services/userService";
+import { Dayjs } from "dayjs";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 export default function Register() {
   const { push } = useRouter();
@@ -118,19 +122,30 @@ export default function Register() {
                 onChange={({ target }) => setPhone(target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="dob"
-                label="DOB"
-                type="dob"
-                id="dob"
-                autoComplete="dob"
-                value={dob}
-                onChange={({ target }) => setDob(target.value)}
-              />
-            </Grid>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Grid item xs={12}>
+                <DatePicker
+                  displayStaticWrapperAs="desktop"
+                  openTo="year"
+                  value={dob}
+                  onChange={(newValue) => {
+                    setDob(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      fullWidth
+                      name="dob"
+                      label="Date of birth"
+                      type="date of birth"
+                      id="dob"
+                      {...params}
+                    />
+                  )}
+                />
+              </Grid>
+            </LocalizationProvider>
+
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>

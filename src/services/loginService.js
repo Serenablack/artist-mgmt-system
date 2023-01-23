@@ -7,7 +7,7 @@ export const loginUser = async (data) => {
       method: "POST",
       data,
     });
-    console.log(response.data);
+
     return response.data;
   } catch (error) {
     return error.response.data;
