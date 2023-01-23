@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 
 export default function Navbar() {
   const { push } = useRouter();
-
-  const user = JSON.parse(
-    window.localStorage.getItem("authorizedUser")
-  ).userFound;
+  let user;
+  if (typeof window !== "undefined") {
+    user = JSON.parse(window.localStorage.getItem("authorizedUser")).userFound;
+  }
 
   const handleLogout = () => {
     window.localStorage.removeItem("authorizedUser");
