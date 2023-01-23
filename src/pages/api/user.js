@@ -1,10 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient({ log: ["query"] });
-const jwt = require("jsonwebtoken");
-import withToken from "src/middleware/withToken";
-import jwtDecode from "jwt-decode";
+const bcrypt = require("bcryptjs");
 
 async function handler(req, res) {
+  if (req.method === "GET") {
+    let user = await prisma.user.some({
+      where: { email: true },
+    });
+    console.log(user);
+    return res.status(200).json(user);
+  }
+
   if (req.method === "POST") {
     const {
       firstName,
@@ -15,27 +21,26 @@ async function handler(req, res) {
       dob,
       gender,
       address,
-    } = req.body;
+    } = req.body.data;
+    console.log(firstName, lastName);
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    console.log(firstName, lastName);
     const user = await prisma.user.create({
       data: {
-        firstName,
-        lastName,
-        email,
-        password,
-        phone,
-        dob,
-        gender,
-        address,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: passwordHash,
+        phone: phone,
+        dob: dob,
+        gender: gender,
+        address: address,
       },
     });
     console.log(user);
-    const userForToken = {
-      email: user.email,
-      id: user.id,
-    };
-    const token = jwt.sign(userForToken, process.env.SECRET);
-    console.log(user.token);
-    res.status(203).json({ user, token });
+
+    res.status(203).json({ user });
   }
 }
-export default withToken(handler);
+export default handler;
