@@ -5,6 +5,14 @@ const prisma = new PrismaClient({ log: ["query"] });
 const bcrypt = require("bcryptjs");
 
 async function handler(req, res) {
+  if (req.method === "GET") {
+    let user = await prisma.user.some({
+      where: { email: true },
+    });
+    console.log(user);
+    return res.status(200).json(user);
+  }
+
   if (req.method === "POST") {
     const {
       firstName,
