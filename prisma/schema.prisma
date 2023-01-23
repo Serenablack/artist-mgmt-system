@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(500)
+  phone     String   @db.VarChar(20)
+  dob       DateTime
+  gender    gender
+  address   String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Artist {
+  id                 Int      @id @default(autoincrement())
+  name               String   @db.VarChar(255)
+  dob                DateTime
+  gender             gender
+  address            String   @db.VarChar(255)
+  firstReleaseYear   Int
+  noOfAlbumsReleased Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  music Music[]
+}
+
+enum gender {
+  m
+  f
+  o
+}
+
+model Music {
+  title     String   @db.VarChar(255)
+  albumName String   @db.VarChar(255)
+  genre     genre
+  artist    Artist   @relation(fields: [artistId], references: [id])
+  artistId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([artistId])
+}
+
+enum genre {
+  rnb
+  country
+  classic
+  rock
+  jazz
+}
