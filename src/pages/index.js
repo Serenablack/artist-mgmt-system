@@ -7,11 +7,18 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "@services/loginService";
 import { useRouter } from "next/router";
+import { initializeUsers } from "@/redux/reducers/userReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(initializeUsers());
+  }, [dispatch]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { push } = useRouter();
@@ -21,12 +28,13 @@ const HomePage = () => {
       email,
       password,
     });
-    console.log(user);
+    if (user) {
+      window.localStorage.setItem("authorizedUser", JSON.stringify(user));
+      setEmail("");
+      setPassword("");
 
-    setEmail("");
-    setPassword("");
-
-    push("/home");
+      push("/home");
+    }
   };
 
   return (
