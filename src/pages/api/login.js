@@ -6,7 +6,6 @@ import jwtDecode from "jwt-decode";
 
 async function handler(req, res) {
   if (req.method === "POST") {
-    console.log(req.body.email);
     const userFound = await prisma.user.findUnique({
       where: { email: req.body.data.email },
     });
@@ -17,8 +16,7 @@ async function handler(req, res) {
     };
     const token = jwt.sign(userForToken, process.env.SECRET);
 
-    console.log(user.token);
-    res.status(203).json({ user, token });
+    res.status(203).json({ userFound, token });
   }
 }
 export default tokenExtractor(handler);
