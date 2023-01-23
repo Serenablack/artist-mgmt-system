@@ -9,7 +9,7 @@ import store from "@redux/store";
 import { Provider } from "react-redux";
 
 export default function MyApp(props) {
-  const { Component } = props;
+  const { Component, pageProps } = props;
 
   return (
     <Provider store={store}>

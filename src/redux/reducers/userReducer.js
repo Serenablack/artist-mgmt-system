@@ -15,11 +15,14 @@ const userSlice = createSlice({
 });
 export const { initUser, addUser } = userSlice.actions;
 
-export const initializeUsers = (authorizeUser) => {
+export const initializeUsers = () => {
   return async (dispatch) => {
-    const { userFound, token } = authorizeUser;
-    const users = await getUser(authorizeUser.token);
-    dispatch(addUser(users));
+    const user = JSON.parse(window.localStorage.getItem("authorizedUser"));
+    console.log(user.token);
+    const { userFound, token } = user;
+    const users = await getUser(token);
+    console.log(users);
+    dispatch(initUser(users));
   };
 };
 
