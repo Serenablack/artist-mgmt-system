@@ -21,21 +21,31 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <Typography
+        variant="h6"
+        component="div"
+        alignItems="center"
+        sx={{ flexGrow: 1 }}
+      >
+        Artist Management System
+      </Typography>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Artist Management System
-          </Typography>
-
-          <Box>
-            <Button color="inherit" onClick={() => push("/user")}>
-              User
-            </Button>
-            <Button color="inherit" onClick={() => push("/artist")}>
-              Artist
-            </Button>
+          <Box display="flex" justifyContent="split-pair">
+            <Box>
+              <Button color="#c223er" onClick={() => push("/create")}>
+                Create
+              </Button>
+            </Box>
+            <Box>
+              <Button color="inherit" onClick={() => push("/user")}>
+                Users
+              </Button>
+              <Button color="inherit" onClick={() => push("/artist")}>
+                Artist
+              </Button>
+            </Box>
           </Box>
-
           <Box display="flex" alignItems="center" gap={1.5}>
             <Avatar />
             <Typography variant="overline">
