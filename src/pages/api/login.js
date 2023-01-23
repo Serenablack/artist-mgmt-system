@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 import tokenExtractor from "@/middleware/tokenExtractor";
-
 import jwtDecode from "jwt-decode";
 
 async function handler(req, res) {

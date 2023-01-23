@@ -1,3 +1,5 @@
+import tokenExtractor from "@/middleware/tokenExtractor";
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient({ log: ["query"] });
 const bcrypt = require("bcryptjs");
@@ -22,10 +24,8 @@ async function handler(req, res) {
       gender,
       address,
     } = req.body.data;
-    console.log(firstName, lastName);
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    console.log(firstName, lastName);
     const user = await prisma.user.create({
       data: {
         firstName: firstName,
@@ -38,8 +38,6 @@ async function handler(req, res) {
         address: address,
       },
     });
-    console.log(user);
-
     res.status(203).json({ user });
   }
 }
