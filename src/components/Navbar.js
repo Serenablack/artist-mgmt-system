@@ -1,13 +1,16 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import { useRouter } from "next/router";
 
-export default function Navbar() {
+import { useRouter } from "next/router";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+
+const Navbar = () => {
   const { push } = useRouter();
   let user;
   if (typeof window !== "undefined") {
@@ -33,34 +36,36 @@ export default function Navbar() {
         <Toolbar>
           <Box display="flex" justifyContent="split-pair">
             <Box>
-              <Button color="#c223er" onClick={() => push("/create")}>
-                Create
-              </Button>
-            </Box>
-            <Box>
-              <Button color="inherit" onClick={() => push("/user")}>
+              <Button sx={{ color: "white" }} onClick={() => push("/user")}>
                 Users
               </Button>
-              <Button color="inherit" onClick={() => push("/artist")}>
+              <Button sx={{ color: "white" }} onClick={() => push("/artist")}>
                 Artist
               </Button>
+            </Box>{" "}
+            <Box display="flex" alignItems="center" gap={1.5}>
+              <Avatar />
+              <Typography variant="overline">
+                {user?.firstName + " " + user?.lastName}
+              </Typography>
+              <Button variant="contained" onClick={handleLogout}>
+                Logout
+              </Button>
             </Box>
-          </Box>
-          <Box display="flex" alignItems="center" gap={1.5}>
-            <Avatar />
-            <Typography variant="overline">
-              {user?.firstName + " " + user?.lastName}
-            </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
           </Box>
         </Toolbar>
       </AppBar>
+      <Box sx={{ pt: 4 }}>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ color: "blue" }}
+          onClick={() => push("/create")}
+        >
+          Create
+        </Button>
+      </Box>
     </Box>
   );
-}
+};
+export default Navbar;
