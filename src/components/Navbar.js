@@ -6,7 +6,6 @@ import {
   Avatar,
   Box,
   Button,
-  Container,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -24,24 +23,26 @@ const Navbar = () => {
   };
 
   return (
-    <Container>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography
-          variant="h6"
-          component="div"
-          alignItems="center"
-          sx={{ flexGrow: 1 }}
-        >
-          Artist Management System
-        </Typography>
-        <AppBar position="static">
-          <Toolbar>
-            <Box display="flex" justifyContent="split-pair">
-              <Box>
-                <Button onClick={() => push("/user")}>Users</Button>
-                <Button onClick={() => push("/artist")}>Artist</Button>
-              </Box>
-            </Box>
+    <Box sx={{ flexGrow: 1 }}>
+      <Typography
+        variant="h6"
+        component="div"
+        alignItems="center"
+        sx={{ flexGrow: 1 }}
+      >
+        Artist Management System
+      </Typography>
+      <AppBar position="static">
+        <Toolbar>
+          <Box display="flex" justifyContent="split-pair">
+            <Box>
+              <Button sx={{ color: "white" }} onClick={() => push("/user")}>
+                Users
+              </Button>
+              <Button sx={{ color: "white" }} onClick={() => push("/artist")}>
+                Artist
+              </Button>
+            </Box>{" "}
             <Box display="flex" alignItems="center" gap={1.5}>
               <Avatar />
               <Typography variant="overline">
@@ -51,10 +52,20 @@ const Navbar = () => {
                 Logout
               </Button>
             </Box>
-          </Toolbar>
-        </AppBar>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ pt: 4 }}>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ color: "blue" }}
+          onClick={() => push("/create")}
+        >
+          Create
+        </Button>
       </Box>
-    </Container>
+    </Box>
   );
 };
 export default Navbar;
