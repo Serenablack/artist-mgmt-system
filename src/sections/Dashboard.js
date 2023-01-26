@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
-import Navbar from "@/components/navbar";
 import {
   Box,
   Button,
@@ -17,6 +16,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "@/components/Navbar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -27,11 +27,13 @@ const Dashboard = () => {
     month: "long",
     day: "numeric",
   };
-  if (typeof window !== "undefined") {
-    const userInLocal = JSON.parse(
-      window.localStorage.getItem("authorizedUser")
-    ).userFound;
-  }
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const userInLocal = JSON.parse(
+  //       window.localStorage.getItem("authorizedUser")
+  //     ).userFound;
+  //   }
+  // }, []);
 
   const users = [
     {
@@ -92,7 +94,11 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-
+      <Box>
+        <Button sx={{ color: "blue" }} onClick={() => push("/create")}>
+          Create
+        </Button>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
@@ -104,13 +110,13 @@ const Dashboard = () => {
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
             >
-              <TableCell align="center"> Name</TableCell>
+              <TableCell align="center">Name</TableCell>
               <TableCell align="center">Email </TableCell>
               <TableCell align="center">Phone number</TableCell>
               <TableCell align="center">Date of birth </TableCell>
-              <TableCell align="center">Next Gender</TableCell>
-              <TableCell align="center">Register Address </TableCell>
-              <TableCell align="center">Action </TableCell>
+              <TableCell align="center">Gender</TableCell>
+              <TableCell align="center">Address </TableCell>
+              <TableCell align="center">Actions </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -133,6 +139,7 @@ const Dashboard = () => {
                 <TableCell align="left">{user?.address}</TableCell>
                 <TableCell>
                   <Button
+                    main
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -142,6 +149,7 @@ const Dashboard = () => {
                     Edit
                   </Button>
                   <Button
+                    main
                     color="error"
                     onClick={(e) => {
                       e.preventDefault();
