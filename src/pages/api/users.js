@@ -7,7 +7,6 @@ const bcrypt = require("bcryptjs");
 async function handler(req, res) {
   if (req.method === "GET") {
     let user = await prisma.user.findMany();
-    console.log(user);
     return res.status(200).json(user);
   }
 }
