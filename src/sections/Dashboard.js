@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import {
   Box,
   Button,
+  Container,
   Icon,
   Pagination,
   Paper,
@@ -92,13 +93,9 @@ const Dashboard = () => {
   const { push } = useRouter();
 
   return (
-    <>
+    <Container>
       <Navbar />
-      <Box>
-        <Button sx={{ color: "blue" }} onClick={() => push("/create")}>
-          Create
-        </Button>
-      </Box>
+
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
@@ -173,7 +170,7 @@ const Dashboard = () => {
         shape="rounded"
         size="large"
       />
-    </>
+    </Container>
   );
 };
 
