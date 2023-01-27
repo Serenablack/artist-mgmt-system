@@ -12,33 +12,37 @@ import { loginUser } from "@services/loginService";
 import { useRouter } from "next/router";
 import { initializeUsers } from "@/redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "@/redux/reducers/loginReducer";
+import Cookies from "js-cookie";
 
 const HomePage = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.loggedUser);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(initializeUsers());
-  }, [dispatch]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { push } = useRouter();
+
   const handleLogin = async (event) => {
     event.preventDefault();
     const user = await loginUser({
       email,
       password,
     });
-    if (user) {
-      window.localStorage.setItem("authorizedUser", JSON.stringify(user));
-      setEmail("");
-      setPassword("");
+    Cookies.set("userLocal", JSON.stringify(user));
+    dispatch(initializeUsers());
+    dispatch(login(user));
 
-      push("/home");
-    }
+    setEmail("");
+    setPassword("");
+
+    push("/home");
+    // }
+    // }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <Box
         sx={{
           marginTop: 8,

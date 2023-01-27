@@ -9,16 +9,16 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const { push } = useRouter();
   let user;
-  if (typeof window !== "undefined") {
-    user = JSON.parse(window.localStorage.getItem("authorizedUser")).userFound;
-  }
+
+  user = JSON.parse(Cookies.get("userLocal")).userFound;
 
   const handleLogout = () => {
-    window.localStorage.removeItem("authorizedUser");
+    Cookies.remove("userLocal");
     push("/");
   };
 
