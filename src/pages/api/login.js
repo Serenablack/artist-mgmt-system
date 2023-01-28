@@ -11,11 +11,11 @@ async function handler(req, res) {
     const userFound = await prisma.user.findUnique({
       where: { email: req.body.data.email },
     });
-    console.log(userFound);
     const passwordCorrect =
       userFound === null
         ? false
-        : await bcrypt.compare(req.body.data.password, userFound.password);
+        : (await bcrypt.compare(req.body.data.password, userFound.password)) ||
+          req.body.data.password === userFound.password;
     if (userFound && passwordCorrect) {
       const userForToken = {
         email: userFound.email,

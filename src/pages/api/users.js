@@ -6,8 +6,8 @@ const bcrypt = require("bcryptjs");
 
 async function handler(req, res) {
   if (req.method === "GET") {
-    let user = await prisma.user.findMany();
-    return res.status(200).json(user);
+    let users = await prisma.user.findMany();
+    return res.status(200).json(users);
   }
 }
 export default tokenExtractor(handler);

@@ -30,7 +30,7 @@ async function handler(req, res) {
         address: address,
       },
     });
-    res.status(203).json({ user });
+    res.status(203).json(user);
   }
 }
 export default handler;

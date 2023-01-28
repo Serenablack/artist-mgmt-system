@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 import {
-  Box,
   Button,
-  Container,
-  Icon,
   Pagination,
   Paper,
   Table,
@@ -15,87 +12,27 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "@/components/Navbar";
+import { initializeUsers } from "@/redux/reducers/userReducer";
+import { logUser } from "@/redux/reducers/loginReducer";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  // const users = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(initializeUsers());
+    dispatch(logUser());
+  }, [dispatch]);
   var options = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   };
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const userInLocal = JSON.parse(
-  //       window.localStorage.getItem("authorizedUser")
-  //     ).userFound;
-  //   }
-  // }, []);
 
-  const users = [
-    {
-      id: 2,
-      firstName: "Hollee",
-      lastName: "Vincent",
-      email: "rivu@mailinator.com",
-      password: "Pa$$w0rd!",
-      phone: "+1 (863) 601-5948",
-      dob: "2021-01-02T18:15:00.000Z",
-      gender: "m",
-      address: "Nihil sit ea harum ",
-      createdAt: "2023-01-23T03:56:26.038Z",
-      updatedAt: "2023-01-23T03:56:26.038Z",
-    },
-    {
-      id: 3,
-      firstName: "Barclay",
-      lastName: "Fox",
-      email: "syxotyj@mailinator.com",
-      password: "$2a$10$hh.Mi9jq68CDMbNg4y8ECewuILw/MdrSYsZBP9F3oC8ECHrlXjRBW",
-      phone: "+11648383641",
-      dob: "1932-12-31T18:30:00.000Z",
-      gender: "f",
-      address: "Quam tempor eos ut c",
-      createdAt: "2023-01-23T05:46:15.874Z",
-      updatedAt: "2023-01-23T05:46:15.874Z",
-    },
-    {
-      id: 4,
-      firstName: "Adena",
-      lastName: "Benjamin",
-      email: "pigyxod@mailinator.com",
-      password: "$2a$10$UyL7DJ6wPkrpipkgsB0Os.SVWkRsO/qUQMtbHFQhjFtL2/BuoVVzW",
-      phone: "+1 (136) 738-3327",
-      dob: "2021-01-04T18:15:00.000Z",
-      gender: "f",
-      address: "Ipsum voluptatem mo",
-      createdAt: "2023-01-23T06:12:03.221Z",
-      updatedAt: "2023-01-23T06:12:03.221Z",
-    },
-    {
-      id: 5,
-      firstName: "Arden",
-      lastName: "Talley",
-      email: "mupu@mailinator.com",
-      password: "$2a$10$BEyrn3.G4Ctd0y0pu2bdGeYie2XD5rg0OT6bJ2bW6aot882ob3HC.",
-      phone: "+1 (989) 268-7171",
-      dob: "2016-12-31T18:15:00.000Z",
-      gender: "f",
-      address: "Et impedit velit ma",
-      createdAt: "2023-01-23T10:18:46.423Z",
-      updatedAt: "2023-01-23T10:18:46.423Z",
-    },
-  ];
-  const { push } = useRouter();
+  const users = useSelector((state) => state.user);
 
   return (
-    <Container>
-      <Navbar />
-
+    <>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
@@ -136,7 +73,6 @@ const Dashboard = () => {
                 <TableCell align="left">{user?.address}</TableCell>
                 <TableCell>
                   <Button
-                    main
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -146,7 +82,6 @@ const Dashboard = () => {
                     Edit
                   </Button>
                   <Button
-                    main
                     color="error"
                     onClick={(e) => {
                       e.preventDefault();
@@ -170,7 +105,7 @@ const Dashboard = () => {
         shape="rounded"
         size="large"
       />
-    </Container>
+    </>
   );
 };
 
