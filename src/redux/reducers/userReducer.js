@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPageUser, createUser, getUser } from "@/services/userService";
+import { createPageUser, editUser, getUser } from "@/services/userService";
 import Cookies from "js-cookie";
 
 const userSlice = createSlice({
@@ -12,9 +12,17 @@ const userSlice = createSlice({
     addUser(state, action) {
       return [...state, action.payload];
     },
+    updateUser(state, action) {
+      return state?.map((user) => {
+        if (user.id === action.payload.id) {
+          return action.payload;
+        }
+        return user;
+      });
+    },
   },
 });
-export const { initUsers, addUser } = userSlice.actions;
+export const { initUsers, addUser, updateUser } = userSlice.actions;
 
 export const initializeUsers = () => {
   return async (dispatch) => {
@@ -46,6 +54,34 @@ export const createNew = ({
       address,
     });
     dispatch(addUser(userCreated));
+  };
+};
+
+export const editOld = ({
+  id,
+  firstName,
+  lastName,
+  email,
+  password,
+  phone,
+  dob,
+  gender,
+  address,
+}) => {
+  return async (dispatch) => {
+    const userEdited = await editUser({
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      dob,
+      gender,
+      address,
+    });
+
+    dispatch(updateUser(userEdited));
   };
 };
 
