@@ -45,7 +45,7 @@ export default function Register() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <Box
         sx={{
           marginTop: 8,
@@ -115,7 +115,7 @@ export default function Register() {
                 fullWidth
                 name="phone"
                 label="Phone"
-                type="hone"
+                type="phone"
                 id="phone"
                 autoComplete="phone"
                 value={phone}
@@ -137,7 +137,7 @@ export default function Register() {
                       fullWidth
                       name="dob"
                       label="Date of birth"
-                      type="date of birth"
+                      type="Date of birth"
                       id="dob"
                       {...params}
                     />
