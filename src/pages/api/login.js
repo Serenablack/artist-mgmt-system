@@ -12,10 +12,13 @@ async function handler(req, res) {
       where: { email: req.body.data.email },
     });
     console.log(userFound);
+    console.log(req.body.data.password === userFound.password);
+
     const passwordCorrect =
       userFound === null
         ? false
-        : await bcrypt.compare(req.body.data.password, userFound.password);
+        : (await bcrypt.compare(req.body.data.password, userFound.password)) ||
+          req.body.data.password === userFound.password;
     if (userFound && passwordCorrect) {
       const userForToken = {
         email: userFound.email,
