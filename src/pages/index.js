@@ -7,22 +7,25 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { loginUser } from "@services/loginService";
 import { useRouter } from "next/router";
 import { initializeUsers } from "@/redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/redux/reducers/loginReducer";
 import Cookies from "js-cookie";
 
 const HomePage = () => {
-  const user = useSelector((state) => state.loggedUser);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { push } = useRouter();
 
+  const userLocal = Cookies.get("userLocal");
+  if (userLocal) {
+    const user = JSON.parse(userLocal);
+    push("/home");
+  }
   const handleLogin = async (event) => {
     event.preventDefault();
     const user = await loginUser({
@@ -31,14 +34,9 @@ const HomePage = () => {
     });
     Cookies.set("userLocal", JSON.stringify(user));
     dispatch(initializeUsers());
-    dispatch(login(user));
-
     setEmail("");
     setPassword("");
-
     push("/home");
-    // }
-    // }
   };
 
   return (
