@@ -1,34 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUser } from "@/services/userService";
+import { createPageUser, createUser, getUser } from "@/services/userService";
+import Cookies from "js-cookie";
 
 const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    initUser(state, action) {
+    initUsers(state, action) {
       return action.payload;
     },
     addUser(state, action) {
-      return { ...action.payload };
+      return [...state, action.payload];
     },
   },
 });
-export const { initUser, addUser } = userSlice.actions;
+export const { initUsers, addUser } = userSlice.actions;
 
 export const initializeUsers = () => {
   return async (dispatch) => {
-    const user = JSON.parse(window.localStorage.getItem("authorizedUser"));
-    console.log(user.token);
-    const { userFound, token } = user;
-    const users = await getUser(token);
-    console.log(users);
-    dispatch(initUser(users));
+    const user = JSON.parse(Cookies.get("userLocal"));
+    const users = await getUser(user?.token);
+    dispatch(initUsers(users));
   };
 };
 
-export const createNew = (token) => {
+export const createNew = ({
+  firstName,
+  lastName,
+  email,
+  password,
+  phone,
+  dob,
+  gender,
+  address,
+}) => {
   return async (dispatch) => {
-    dispatch(addUser(response));
+    const userCreated = await createPageUser({
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      dob,
+      gender,
+      address,
+    });
+    dispatch(addUser(userCreated));
   };
 };
 
