@@ -1,22 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient({ log: ["query"] });
-const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 import tokenExtractor from "@/middleware/tokenExtractor";
-import jwtDecode from "jwt-decode";
 
 async function handler(req, res) {
   if (req.method === "POST") {
     const userFound = await prisma.user.findUnique({
       where: { email: req.body.data.email },
     });
-    const passwordCorrect =
-      userFound === null
-        ? false
-        : (await bcrypt.compare(req.body.data.password, userFound.password)) ||
-          req.body.data.password === userFound.password;
-    if (userFound && passwordCorrect) {
+
+    if (userFound) {
       const userForToken = {
         email: userFound.email,
         id: userFound.id,
