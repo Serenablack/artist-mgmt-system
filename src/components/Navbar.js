@@ -9,13 +9,12 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { Create } from "@mui/icons-material";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
   const { push } = useRouter();
-  let user;
-
-  user = JSON.parse(Cookies.get("userLocal")).userFound;
+  const user = JSON.parse(Cookies.get("userLocal")).userFound;
 
   const handleLogout = () => {
     Cookies.remove("userLocal");
@@ -55,7 +54,7 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box sx={{ pt: 4 }}>
+      <Box container sx={{ pt: 4 }}>
         <Button
           variant="outlined"
           size="small"
