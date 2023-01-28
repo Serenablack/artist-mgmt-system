@@ -1,23 +1,27 @@
-import { getUser } from "@/services/userService";
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser } from "@services/loginService";
+import Cookies from "js-cookie";
 
 const loginSlice = createSlice({
   name: "loggedUser",
-  initialState: null,
+  initialState: { id: null },
   reducers: {
     initUser(state, action) {
-      return action.payload;
+      console.log(action.payload);
+      return {};
     },
   },
 });
 export const { initUser } = loginSlice.actions;
 
-export const login = (userInLocal) => {
+export const logUser = () => {
   return async (dispatch) => {
-    const logged = loginUser(userInLocal.userFound);
-
-    dispatch(initUser(userInLocal));
+    const userLocal = JSON.parse(Cookies.get("userLocal"));
+    console.log(userLocal);
+    if (Object.keys(userLocal).length !== 0) {
+      const user = userLocal?.userFound;
+      dispatch(initUser(user));
+    }
   };
 };
 export default loginSlice.reducer;
