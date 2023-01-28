@@ -11,9 +11,6 @@ async function handler(req, res) {
     const userFound = await prisma.user.findUnique({
       where: { email: req.body.data.email },
     });
-    console.log(userFound);
-    console.log(req.body.data.password === userFound.password);
-
     const passwordCorrect =
       userFound === null
         ? false
