@@ -38,11 +38,24 @@ export default async function handler(req, res) {
             address: address,
           },
         });
-        console.log(user);
 
         res.status(203).json(user);
       } catch (error) {
         return res.status(400).json({ success: false });
+      }
+      break;
+
+    case "DELETE":
+      try {
+        const deleteUser = await prisma.user.delete({
+          where: {
+            id: Number(req.query.id),
+          },
+        });
+
+        res.status(200).json(deleteUser);
+      } catch (error) {
+        res.status(400).json({ success: false });
       }
       break;
   }

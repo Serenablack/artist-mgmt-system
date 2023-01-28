@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeUsers } from "@/redux/reducers/userReducer";
+import { delUser, initializeUsers } from "@/redux/reducers/userReducer";
 import { logUser } from "@/redux/reducers/loginReducer";
 
 const Dashboard = () => {
@@ -28,6 +28,22 @@ const Dashboard = () => {
     month: "long",
     day: "numeric",
   };
+
+  const hanldeDelete = async (user) => {
+    await dispatch(delUser(user));
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    color: "red",
+    bgcolor: "white",
+    boxShadow: 30,
+    p: 4,
+  };
+
   const users = useSelector((state) => state.user);
   const { push } = useRouter();
   return (
@@ -75,7 +91,6 @@ const Dashboard = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-
                       push(`/user/edit/${user.id}`);
                     }}
                   >
@@ -86,7 +101,7 @@ const Dashboard = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      hanldeDelete(user.id);
+                      hanldeDelete(user);
                     }}
                   >
                     delete
