@@ -28,9 +28,8 @@ const Dashboard = () => {
     month: "long",
     day: "numeric",
   };
-
   const users = useSelector((state) => state.user);
-
+  const { push } = useRouter();
   return (
     <>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
@@ -76,7 +75,8 @@ const Dashboard = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      handleEdit(user.id);
+
+                      push(`/user/edit/${user.id}`);
                     }}
                   >
                     Edit
