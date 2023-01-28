@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Dashboard from "@/sections/Dashboard";
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -17,10 +17,10 @@ export default function DashboardPage() {
 
   if (userLocal) {
     return (
-      <>
+      <Container>
         <Navbar />
         <Dashboard />
-      </>
+      </Container>
     );
   }
 }
