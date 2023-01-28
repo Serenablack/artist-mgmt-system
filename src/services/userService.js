@@ -61,3 +61,19 @@ export const editUser = async (data) => {
     return error.response.data;
   }
 };
+export const deleteUser = async (data) => {
+  try {
+    if (JSON.parse(Cookies.get("userLocal"))) {
+      const token = JSON.parse(Cookies.get("userLocal")).token;
+      const response = await axios.delete(`/api/users/${data.id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    }
+  } catch (error) {
+    return error.response.data;
+  }
+};

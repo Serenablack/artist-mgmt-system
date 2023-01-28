@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPageUser, editUser, getUser } from "@/services/userService";
+import {
+  createPageUser,
+  deleteUser,
+  editUser,
+  getUser,
+} from "@/services/userService";
 import Cookies from "js-cookie";
 
 const userSlice = createSlice({
@@ -20,9 +25,12 @@ const userSlice = createSlice({
         return user;
       });
     },
+    removeUser(state, action) {
+      return state.filter((user) => user.id !== action.payload.id);
+    },
   },
 });
-export const { initUsers, addUser, updateUser } = userSlice.actions;
+export const { initUsers, addUser, updateUser, removeUser } = userSlice.actions;
 
 export const initializeUsers = () => {
   return async (dispatch) => {
@@ -82,6 +90,12 @@ export const editOld = ({
     });
 
     dispatch(updateUser(userEdited));
+  };
+};
+export const delUser = (user) => {
+  return async (dispatch) => {
+    await dispatch(removeUser(user));
+    const result = deleteUser(user);
   };
 };
 
