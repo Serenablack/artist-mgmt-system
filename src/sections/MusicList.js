@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import {
   Box,
   Button,
+  Container,
+  Grid,
   Pagination,
   Paper,
   Table,
@@ -14,13 +16,11 @@ import {
   TableRow,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { delArtist, initializeArtists } from "@/redux/reducers/artistReducer";
+import MusicCreate from "./MusicCreate";
 
-const ArtistList = () => {
+const MusicList = ({ id }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(initializeArtists());
-  }, [dispatch]);
+
   var options = {
     weekday: "long",
     year: "numeric",
@@ -34,27 +34,48 @@ const ArtistList = () => {
     hour: "numeric",
     minute: "numeric",
   };
-
-  const hanldeDelete = async (artist) => {
-    await dispatch(delArtist(artist));
+  const handleClick = () => {
+    push(`/artist/music/create/${id}`);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    color: "red",
-    bgcolor: "white",
-    boxShadow: 30,
-    p: 4,
-  };
+  const musics = [
+    {
+      title: "Shape of You",
+      albumName: "Divide",
+      genre: "Pop",
+      artist: {
+        id: 1,
+        name: "Ed Sheeran",
+        dob: "1991-02-17T00:00:00.000Z",
+        gender: "Male",
+        address: "London, UK",
+        firstReleaseYear: 2011,
+        noOfAlbumsReleased: 7,
+      },
+      artistId: 1,
+      createdAt: "2022-01-01T00:00:00.000Z",
+      updatedAt: "2022-01-01T00:00:00.000Z",
+    },
+    {
+      title: "Thriller",
+      albumName: "Thriller",
+      genre: "Pop",
+      artist: {
+        id: 2,
+        name: "Michael Jackson",
+        dob: "1958-08-29T00:00:00.000Z",
+        gender: "Male",
+        address: "Gary, Indiana, USA",
+        firstReleaseYear: 1971,
+        noOfAlbumsReleased: 12,
+      },
+      artistId: 2,
+      createdAt: "2022-01-01T00:00:00.000Z",
+      updatedAt: "2022-01-01T00:00:00.000Z",
+    },
+  ];
+
   const { push } = useRouter();
-  const artists = useSelector((state) => state.artist);
-  const handleClick = (id) => {
-    push(`/artist/music/${id}`);
-  };
-
   return (
     <>
       <Box sx={{ pt: 4 }}>
@@ -62,7 +83,7 @@ const ArtistList = () => {
           variant="outlined"
           size="small"
           sx={{ color: "blue" }}
-          onClick={() => push("/artist/create")}
+          onClick={handleClick}
         >
           Create
         </Button>
@@ -74,65 +95,46 @@ const ArtistList = () => {
             <TableRow
               sx={{
                 backgroundColor: "rgb(250 500 500)",
-
                 minWidth: "80px",
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
             >
-              <TableCell align="center">Name</TableCell>{" "}
-              <TableCell align="center">Date of birth </TableCell>
-              <TableCell align="center">Gender</TableCell>
-              <TableCell align="center">Address </TableCell>
-              <TableCell align="center">First Release Year </TableCell>
-              <TableCell align="center">Albums Released</TableCell>
+              <TableCell align="center">Title</TableCell>{" "}
+              <TableCell align="center">Name of Album</TableCell>
+              <TableCell align="center">Genre</TableCell>
+              <TableCell align="center">Artist </TableCell>
               <TableCell align="center">Created At</TableCell>
               <TableCell align="center">Updated At</TableCell>
               <TableCell align="center">Actions </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {artists?.map((artist) => (
+            {musics?.map((music) => (
               <TableRow
-                hover={true}
-                selected={true}
-                onClick={() => {
-                  handleClick(artist.id);
-                }}
-                key={artist.id}
+                key={music.id}
                 sx={{
-                  "&:last-child td, &:last-child th": {
-                    border: 0,
-                  },
+                  "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
-                <TableCell align="left">{artist?.name}</TableCell>
+                <TableCell align="left">{music?.title}</TableCell>
+
+                <TableCell align="left">{music?.albumName}</TableCell>
+                <TableCell align="left">{music?.genre}</TableCell>
+                <TableCell align="left">{music?.artist?.name}</TableCell>
+
                 <TableCell align="left">
-                  {new Date(artist?.dob).toLocaleString("en-US", options)}
-                </TableCell>
-                <TableCell align="left">{artist?.gender}</TableCell>
-                <TableCell align="left">{artist?.address}</TableCell>
-                <TableCell align="left">{artist?.firstReleaseYear}</TableCell>
-                <TableCell align="left">{artist?.noOfAlbumsReleased}</TableCell>
-                <TableCell align="left">
-                  {" "}
-                  {new Date(artist?.createdAt).toLocaleString(
-                    "en-US",
-                    options2
-                  )}
+                  {new Date(music?.createdAt).toLocaleString("en-US", options2)}
                   {}
                 </TableCell>
                 <TableCell align="left">
-                  {new Date(artist?.updatedAt).toLocaleString(
-                    "en-US",
-                    options2
-                  )}
+                  {new Date(music?.updatedAt).toLocaleString("en-US", options2)}
                 </TableCell>
                 <TableCell>
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      push(`/artist/edit/${artist.id}`);
+                      push(`/music/edit/${music.id}`);
                     }}
                   >
                     Edit
@@ -142,7 +144,7 @@ const ArtistList = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      hanldeDelete(artist);
+                      hanldeDelete(music);
                     }}
                   >
                     delete
@@ -165,4 +167,4 @@ const ArtistList = () => {
   );
 };
 
-export default ArtistList;
+export default MusicList;
