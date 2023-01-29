@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { Create } from "@mui/icons-material";
 
 import { useRouter } from "next/router";
 import {
+  Box,
   Button,
   Pagination,
   Paper,
@@ -48,6 +50,16 @@ const Dashboard = () => {
   const { push } = useRouter();
   return (
     <>
+      <Box container sx={{ pt: 4 }}>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ color: "blue" }}
+          onClick={() => push("/create")}
+        >
+          Create
+        </Button>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
