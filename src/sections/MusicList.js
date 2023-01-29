@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import {
   Box,
   Button,
-  Container,
-  Grid,
   Pagination,
   Paper,
   Table,
@@ -16,17 +14,15 @@ import {
   TableRow,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import MusicCreate from "./MusicCreate";
+import { delMusic, initializeMusic } from "@/redux/reducers/musicReducer";
 
 const MusicList = ({ id }) => {
   const dispatch = useDispatch();
+  const artists = useSelector((state) => state.artist);
+  useEffect(() => {
+    dispatch(initializeMusic(Number(id)));
+  }, [dispatch, id]);
 
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
   var options2 = {
     year: "numeric",
     month: "long",
@@ -38,42 +34,11 @@ const MusicList = ({ id }) => {
     push(`/artist/music/create/${id}`);
   };
 
-  const musics = [
-    {
-      title: "Shape of You",
-      albumName: "Divide",
-      genre: "Pop",
-      artist: {
-        id: 1,
-        name: "Ed Sheeran",
-        dob: "1991-02-17T00:00:00.000Z",
-        gender: "Male",
-        address: "London, UK",
-        firstReleaseYear: 2011,
-        noOfAlbumsReleased: 7,
-      },
-      artistId: 1,
-      createdAt: "2022-01-01T00:00:00.000Z",
-      updatedAt: "2022-01-01T00:00:00.000Z",
-    },
-    {
-      title: "Thriller",
-      albumName: "Thriller",
-      genre: "Pop",
-      artist: {
-        id: 2,
-        name: "Michael Jackson",
-        dob: "1958-08-29T00:00:00.000Z",
-        gender: "Male",
-        address: "Gary, Indiana, USA",
-        firstReleaseYear: 1971,
-        noOfAlbumsReleased: 12,
-      },
-      artistId: 2,
-      createdAt: "2022-01-01T00:00:00.000Z",
-      updatedAt: "2022-01-01T00:00:00.000Z",
-    },
-  ];
+  const hanldeDelete = async (music) => {
+    await dispatch(delMusic(music));
+  };
+
+  const musics = useSelector((state) => state.music);
 
   const { push } = useRouter();
   return (
@@ -102,7 +67,6 @@ const MusicList = ({ id }) => {
               <TableCell align="center">Title</TableCell>{" "}
               <TableCell align="center">Name of Album</TableCell>
               <TableCell align="center">Genre</TableCell>
-              <TableCell align="center">Artist </TableCell>
               <TableCell align="center">Created At</TableCell>
               <TableCell align="center">Updated At</TableCell>
               <TableCell align="center">Actions </TableCell>
@@ -120,7 +84,6 @@ const MusicList = ({ id }) => {
 
                 <TableCell align="left">{music?.albumName}</TableCell>
                 <TableCell align="left">{music?.genre}</TableCell>
-                <TableCell align="left">{music?.artist?.name}</TableCell>
 
                 <TableCell align="left">
                   {new Date(music?.createdAt).toLocaleString("en-US", options2)}
