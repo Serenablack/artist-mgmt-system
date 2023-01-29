@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 export const getUser = async (token) => {
   try {
-    const response = await axios.get(`api/users`, {
+    const response = await axios.get(`/api/users`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${token}`,
@@ -16,7 +16,7 @@ export const getUser = async (token) => {
 
 export const createUser = async (data) => {
   try {
-    const response = await axios.post(`api/user`, {
+    const response = await axios.post(`/api/user`, {
       method: "POST",
       data,
     });
@@ -30,7 +30,7 @@ export const createPageUser = async (data) => {
   try {
     if (JSON.parse(Cookies.get("userLocal"))) {
       const token = JSON.parse(Cookies.get("userLocal")).token;
-      const response = await axios.post(`api/users`, {
+      const response = await axios.post(`/api/users`, {
         method: "POST",
         data,
         headers: {
