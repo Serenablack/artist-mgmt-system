@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 import {
@@ -9,11 +9,20 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Create } from "@mui/icons-material";
 import Cookies from "js-cookie";
+import { initializeArtists } from "@/redux/reducers/artistReducer";
+import { useDispatch } from "react-redux";
+import { logUser } from "@/redux/reducers/loginReducer";
+import { initializeUsers } from "@/redux/reducers/userReducer";
 
 const Navbar = () => {
   const { push } = useRouter();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(initializeUsers());
+    dispatch(logUser());
+    dispatch(initializeArtists());
+  }, [dispatch]);
   const user = JSON.parse(Cookies.get("userLocal")).userFound;
 
   const handleLogout = () => {
@@ -35,7 +44,7 @@ const Navbar = () => {
         <Toolbar>
           <Box display="flex" justifyContent="split-pair">
             <Box>
-              <Button sx={{ color: "white" }} onClick={() => push("/user")}>
+              <Button sx={{ color: "white" }} onClick={() => push("/home")}>
                 Users
               </Button>
               <Button sx={{ color: "white" }} onClick={() => push("/artist")}>
@@ -54,16 +63,6 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box container sx={{ pt: 4 }}>
-        <Button
-          variant="outlined"
-          size="small"
-          sx={{ color: "blue" }}
-          onClick={() => push("/create")}
-        >
-          Create
-        </Button>
-      </Box>
     </Box>
   );
 };

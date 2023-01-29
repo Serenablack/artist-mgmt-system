@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Create } from "@mui/icons-material";
 
 import { useRouter } from "next/router";
 import {
@@ -15,14 +14,12 @@ import {
   TableRow,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { delUser, initializeUsers } from "@/redux/reducers/userReducer";
-import { logUser } from "@/redux/reducers/loginReducer";
+import { initializeArtists } from "@/redux/reducers/artistReducer";
 
-const Dashboard = () => {
+const ArtistList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(initializeUsers());
-    dispatch(logUser());
+    dispatch(initializeArtists());
   }, [dispatch]);
   var options = {
     weekday: "long",
@@ -30,9 +27,16 @@ const Dashboard = () => {
     month: "long",
     day: "numeric",
   };
+  var options2 = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
 
-  const hanldeDelete = async (user) => {
-    await dispatch(delUser(user));
+  const hanldeDelete = async (Artist) => {
+    // await dispatch(delArtist(Artist));
   };
 
   const style = {
@@ -46,16 +50,17 @@ const Dashboard = () => {
     p: 4,
   };
 
-  const users = useSelector((state) => state.user);
+  const artists = useSelector((state) => state.artist);
+
   const { push } = useRouter();
   return (
     <>
-      <Box container sx={{ pt: 4 }}>
+      <Box container="false" sx={{ pt: 4 }}>
         <Button
           variant="outlined"
           size="small"
           sx={{ color: "blue" }}
-          onClick={() => push("/create")}
+          onClick={() => push("/artist/create")}
         >
           Create
         </Button>
@@ -71,39 +76,53 @@ const Dashboard = () => {
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
             >
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email </TableCell>
-              <TableCell align="center">Phone number</TableCell>
+              <TableCell align="center">Name</TableCell>{" "}
               <TableCell align="center">Date of birth </TableCell>
               <TableCell align="center">Gender</TableCell>
               <TableCell align="center">Address </TableCell>
+              <TableCell align="center">First Release Year </TableCell>
+              <TableCell align="center">Albums Released</TableCell>
+              <TableCell align="center">Created At</TableCell>
+              <TableCell align="center">Updated At</TableCell>
               <TableCell align="center">Actions </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map((user) => (
+            {artists?.map((artist) => (
               <TableRow
-                key={user.id}
+                key={artist.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
+                <TableCell align="left">{artist?.name}</TableCell>
                 <TableCell align="left">
-                  {user?.firstName + " " + user?.lastName}
+                  {new Date(artist?.dob).toLocaleString("en-US", options)}
                 </TableCell>
-                <TableCell align="left">{user?.email}</TableCell>
-                <TableCell align="left">{user?.phone}</TableCell>
+                <TableCell align="left">{artist?.gender}</TableCell>
+                <TableCell align="left">{artist?.address}</TableCell>
+                <TableCell align="left">{artist?.firstReleaseYear}</TableCell>
+                <TableCell align="left">{artist?.noOfAlbumsReleased}</TableCell>
                 <TableCell align="left">
-                  {new Date(user?.dob).toLocaleString("en-US", options)}
+                  {" "}
+                  {new Date(artist?.createdAt).toLocaleString(
+                    "en-US",
+                    options2
+                  )}
+                  {}
                 </TableCell>
-                <TableCell align="left">{user?.gender}</TableCell>
-                <TableCell align="left">{user?.address}</TableCell>
+                <TableCell align="left">
+                  {new Date(artist?.updatedAt).toLocaleString(
+                    "en-US",
+                    options2
+                  )}
+                </TableCell>
                 <TableCell>
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      push(`/user/edit/${user.id}`);
+                      push(`/artist/edit/${artist.id}`);
                     }}
                   >
                     Edit
@@ -113,7 +132,7 @@ const Dashboard = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      hanldeDelete(user);
+                      hanldeDelete(artist);
                     }}
                   >
                     delete
@@ -136,4 +155,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ArtistList;
