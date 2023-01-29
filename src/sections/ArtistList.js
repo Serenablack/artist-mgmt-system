@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeArtists } from "@/redux/reducers/artistReducer";
+import { delArtist, initializeArtists } from "@/redux/reducers/artistReducer";
 
 const ArtistList = () => {
   const dispatch = useDispatch();
@@ -35,8 +35,8 @@ const ArtistList = () => {
     minute: "numeric",
   };
 
-  const hanldeDelete = async (Artist) => {
-    // await dispatch(delArtist(Artist));
+  const hanldeDelete = async (artist) => {
+    await dispatch(delArtist(artist));
   };
 
   const style = {
