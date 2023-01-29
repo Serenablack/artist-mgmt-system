@@ -53,7 +53,7 @@ model Music {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@id([artistId])
+  @@id([title])
 }
 
 enum genre {
