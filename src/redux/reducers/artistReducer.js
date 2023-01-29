@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createArt, getArtist } from "@/services/artistService";
+import {
+  createArt,
+  deleteArtist,
+  editArtist,
+  getArtist,
+} from "@/services/artistService";
 import Cookies from "js-cookie";
 
 const artistSlice = createSlice({
@@ -12,9 +17,21 @@ const artistSlice = createSlice({
     addArtist(state, action) {
       return [...state, action.payload];
     },
+    updateArtist(state, action) {
+      return state?.map((artist) => {
+        if (artist.id === action.payload.id) {
+          return action.payload;
+        }
+        return artist;
+      });
+    },
+    removeArtist(state, action) {
+      return state.filter((artist) => artist.id !== action.payload.id);
+    },
   },
 });
-export const { initArtists, addArtist } = artistSlice.actions;
+export const { initArtists, addArtist, updateArtist, removeArtist } =
+  artistSlice.actions;
 
 export const initializeArtists = () => {
   return async (dispatch) => {
@@ -42,6 +59,37 @@ export const createNew = ({
       noOfAlbumsReleased,
     });
     dispatch(addArtist(artistNew));
+  };
+};
+
+export const editOld = ({
+  id,
+  name,
+  dob,
+  gender,
+  address,
+  firstReleaseYear,
+  noOfAlbumsReleased,
+}) => {
+  return async (dispatch) => {
+    const artistEdited = await editArtist({
+      id,
+      name,
+      dob,
+      gender,
+      address,
+      firstReleaseYear,
+      noOfAlbumsReleased,
+    });
+
+    dispatch(updateArtist(artistEdited));
+  };
+};
+
+export const delArtist = (artist) => {
+  return async (dispatch) => {
+    await dispatch(removeArtist(artist));
+    const result = deleteArtist(artist);
   };
 };
 

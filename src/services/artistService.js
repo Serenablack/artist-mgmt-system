@@ -32,3 +32,37 @@ export const createArt = async (data) => {
     return error.response.data;
   }
 };
+
+export const editArtist = async (data) => {
+  try {
+    if (JSON.parse(Cookies.get("userLocal"))) {
+      const token = JSON.parse(Cookies.get("userLocal")).token;
+      const response = await axios.put(`/api/artists/${data.id}`, {
+        method: "PUT",
+        data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    }
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export const deleteArtist = async (data) => {
+  try {
+    if (JSON.parse(Cookies.get("userLocal"))) {
+      const token = JSON.parse(Cookies.get("userLocal")).token;
+      const response = await axios.delete(`/api/artists/${data.id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    }
+  } catch (error) {
+    return error.response.data;
+  }
+};
