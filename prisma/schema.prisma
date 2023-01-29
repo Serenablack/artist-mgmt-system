@@ -45,6 +45,8 @@ enum gender {
 }
 
 model Music {
+  id Int @id @default(autoincrement())
+
   title     String   @db.VarChar(255)
   albumName String   @db.VarChar(255)
   genre     genre
@@ -52,8 +54,6 @@ model Music {
   artistId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@id([title])
 }
 
 enum genre {
