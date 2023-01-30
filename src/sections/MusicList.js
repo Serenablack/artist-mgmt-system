@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import {
@@ -18,7 +18,10 @@ import { delMusic, initializeMusic } from "@/redux/reducers/musicReducer";
 
 const MusicList = ({ id }) => {
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 4;
   const artists = useSelector((state) => state.artist);
+
   useEffect(() => {
     dispatch(initializeMusic(Number(id)));
   }, [dispatch, id]);
@@ -38,7 +41,15 @@ const MusicList = ({ id }) => {
     await dispatch(delMusic(music));
   };
 
-  const musics = useSelector((state) => state.music);
+  const handleChange = (e, p) => {
+    setPageNumber(p);
+  };
+
+  const Musics = useSelector((state) => state.music);
+
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const musics = Musics?.slice(startIndex, endIndex);
 
   const { push } = useRouter();
   return (
@@ -121,10 +132,15 @@ const MusicList = ({ id }) => {
 
       <Pagination
         style={{ position: "fixed", bottom: 50 }}
-        count={10}
+        count={100}
+        page={pageNumber}
         variant="outlined"
         shape="rounded"
         size="large"
+        color="primary"
+        onChange={handleChange}
+        itemsPerPage={itemsPerPage}
+        totalMusic={musics?.length}
       />
     </>
   );

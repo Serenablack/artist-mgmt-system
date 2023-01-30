@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Create } from "@mui/icons-material";
 
 import { useRouter } from "next/router";
 import {
   Box,
   Button,
+  Container,
   Pagination,
   Paper,
   Table,
@@ -20,6 +21,9 @@ import { logUser } from "@/redux/reducers/loginReducer";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 4;
+
   useEffect(() => {
     dispatch(initializeUsers());
     dispatch(logUser());
@@ -35,6 +39,10 @@ const Dashboard = () => {
     await dispatch(delUser(user));
   };
 
+  const handleChange = (e, p) => {
+    setPageNumber(p);
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -46,7 +54,12 @@ const Dashboard = () => {
     p: 4,
   };
 
-  const users = useSelector((state) => state.user);
+  const Users = useSelector((state) => state.user);
+
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const users = Users?.slice(startIndex, endIndex);
+
   const { push } = useRouter();
   return (
     <>
@@ -126,11 +139,19 @@ const Dashboard = () => {
       </TableContainer>
 
       <Pagination
-        style={{ position: "fixed", bottom: 50 }}
-        count={10}
+        style={{
+          position: "fixed",
+          bottom: 50,
+        }}
+        count={100}
+        page={pageNumber}
         variant="outlined"
         shape="rounded"
         size="large"
+        // color="primary"
+        onChange={handleChange}
+        itemsPerPage={itemsPerPage}
+        totalUsers={users?.length}
       />
     </>
   );
