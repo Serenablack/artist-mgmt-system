@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import { initializeArtists } from "@/redux/reducers/artistReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logUser } from "@/redux/reducers/loginReducer";
 import { initializeUsers } from "@/redux/reducers/userReducer";
 
@@ -23,7 +23,7 @@ const Navbar = () => {
     dispatch(logUser());
     dispatch(initializeArtists());
   }, [dispatch]);
-  const user = JSON.parse(Cookies.get("userLocal")).userFound;
+  const user = useSelector((state) => state.loggedUser);
 
   const handleLogout = () => {
     Cookies.remove("userLocal");
