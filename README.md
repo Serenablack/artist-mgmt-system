@@ -14,7 +14,7 @@ SECRET="Any string value"
 ```
 Run these commands in your terminal for prisma configuration 
 ```bash
-prisma generate
+npx prisma generate
 npx prisma migrate dev
 ```
 Then, run the development server:
