@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import {
@@ -18,6 +18,9 @@ import { delArtist, initializeArtists } from "@/redux/reducers/artistReducer";
 
 const ArtistList = () => {
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 4;
+
   useEffect(() => {
     dispatch(initializeArtists());
   }, [dispatch]);
@@ -39,6 +42,10 @@ const ArtistList = () => {
     await dispatch(delArtist(artist));
   };
 
+  const handleChange = (e, p) => {
+    setPageNumber(p);
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -50,11 +57,14 @@ const ArtistList = () => {
     p: 4,
   };
   const { push } = useRouter();
-  const artists = useSelector((state) => state.artist);
+  const Artists = useSelector((state) => state.artist);
   const handleClick = (id) => {
     push(`/artist/music/${id}`);
   };
 
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const artists = Artists?.slice(startIndex, endIndex);
   return (
     <>
       <Box sx={{ pt: 4 }}>
@@ -69,11 +79,23 @@ const ArtistList = () => {
       </Box>
 
       <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="table layout">
+        <Table
+          sx={{
+            minWidth: 650,
+            color: "#ffffff",
+            padding: "5px 10px",
+            borderRadius: "3px",
+          }}
+          aria-label="table layout"
+        >
           <TableHead>
             <TableRow
               sx={{
                 backgroundColor: "rgb(250 500 500)",
+
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
 
                 minWidth: "80px",
                 "&:last-child td, &:last-child th": { border: 1 },
@@ -153,13 +175,17 @@ const ArtistList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
       <Pagination
         style={{ position: "fixed", bottom: 50 }}
-        count={10}
+        count={100}
+        page={pageNumber}
         variant="outlined"
         shape="rounded"
         size="large"
+        color="primary"
+        onChange={handleChange}
+        itemsPerPage={itemsPerPage}
+        totalArtists={artists?.length}
       />
     </>
   );
