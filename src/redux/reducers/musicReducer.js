@@ -65,7 +65,6 @@ export const editOld = ({ id, title, albumName, genre, artist, artistId }) => {
       title,
       albumName,
       genre,
-      artistId,
     });
 
     dispatch(updateMusic(musicEdited));
