@@ -97,7 +97,7 @@ const MusicList = ({ id }) => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      push(`/music/edit/${music.id}`);
+                      push(`/artist/music/edit/${music.id}`);
                     }}
                   >
                     Edit
