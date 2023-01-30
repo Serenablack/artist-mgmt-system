@@ -1,5 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-The database used is PostgreSQL along with prisma. 
+The database used is PostgreSQL along with prisma. The UI design is done using MaterialUI with NodeJS in the backend. REST apis have been used for basic CRUD operation available for user, artist and music records in the database.
 
 ## Getting Started
 
