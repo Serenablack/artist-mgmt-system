@@ -64,7 +64,7 @@ const EditPage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Edit Page
+          Edit Artist Details
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <Grid container spacing={2}>
@@ -172,7 +172,7 @@ const EditPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Edit artist
+            Edit
           </Button>
         </Box>
       </Box>

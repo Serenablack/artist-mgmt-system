@@ -50,7 +50,7 @@ const MusicEdit = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Edit Music
+          Edit Music Details
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <Grid container spacing={2}>

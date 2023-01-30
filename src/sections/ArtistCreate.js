@@ -161,7 +161,7 @@ const ArtistCreate = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Create a new artist
+            Create
           </Button>
         </Box>
       </Box>

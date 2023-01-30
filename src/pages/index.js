@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Grid,
+  Link,
   TextField,
   Typography,
 } from "@mui/material";
@@ -64,7 +65,7 @@ const HomePage = () => {
                 label="email"
                 autoFocus
                 onChange={({ target }) => setEmail(target.value)}
-              />{" "}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -89,9 +90,9 @@ const HomePage = () => {
           <Grid item xs={12}>
             <Typography>
               No account yet?
-              <Button href="/register" variant="text" color="primary">
+              <Link href="/register" color="primary" underline="hover">
                 Register
-              </Button>
+              </Link>
             </Typography>
           </Grid>
         </Box>
