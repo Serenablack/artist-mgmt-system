@@ -78,10 +78,12 @@ const Dashboard = () => {
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
+                backgroundColor: "green",
 
                 minWidth: "80px",
-                "&:last-child td, &:last-child th": { border: 1 },
+                "&:last-child td, &:last-child th": {
+                  border: 1,
+                },
               }}
             >
               <TableCell align="center">Name</TableCell>

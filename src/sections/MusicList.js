@@ -70,7 +70,7 @@ const MusicList = ({ id }) => {
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
+                backgroundColor: "green",
                 minWidth: "80px",
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
@@ -140,7 +140,7 @@ const MusicList = ({ id }) => {
         color="primary"
         onChange={handleChange}
         itemsPerPage={itemsPerPage}
-        totalMusic={musics?.length}
+        totalmusic={musics?.length}
       />
     </>
   );

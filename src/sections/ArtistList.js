@@ -91,8 +91,7 @@ const ArtistList = () => {
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
-
+                backgroundColor: "green",
                 fontWeight: "bold",
                 textTransform: "uppercase",
                 letterSpacing: "1px",
