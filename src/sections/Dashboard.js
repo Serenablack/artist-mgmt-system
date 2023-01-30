@@ -14,6 +14,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { delUser, initializeUsers } from "@/redux/reducers/userReducer";
@@ -22,7 +23,7 @@ import { logUser } from "@/redux/reducers/loginReducer";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
   useEffect(() => {
     dispatch(initializeUsers());
@@ -73,15 +74,22 @@ const Dashboard = () => {
           Create
         </Button>
       </Box>
+      <Box>
+        <Typography sx={{ display: "flex", justifyContent: "center" }}>
+          User List
+        </Typography>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
+                backgroundColor: "pink",
 
                 minWidth: "80px",
-                "&:last-child td, &:last-child th": { border: 1 },
+                "&:last-child td, &:last-child th": {
+                  border: 1,
+                },
               }}
             >
               <TableCell align="center">Name</TableCell>
@@ -151,7 +159,7 @@ const Dashboard = () => {
         // color="primary"
         onChange={handleChange}
         itemsPerPage={itemsPerPage}
-        totalUsers={users?.length}
+        totalusers={users?.length}
       />
     </>
   );

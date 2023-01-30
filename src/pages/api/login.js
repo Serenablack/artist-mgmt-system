@@ -2,7 +2,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient({ log: ["query"] });
 
 const jwt = require("jsonwebtoken");
-import tokenExtractor from "@/middleware/tokenExtractor";
 
 async function handler(req, res) {
   if (req.method === "POST") {
@@ -20,4 +19,4 @@ async function handler(req, res) {
     }
   }
 }
-export default tokenExtractor(handler);
+export default handler;

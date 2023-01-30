@@ -12,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { delMusic, initializeMusic } from "@/redux/reducers/musicReducer";
@@ -19,7 +20,7 @@ import { delMusic, initializeMusic } from "@/redux/reducers/musicReducer";
 const MusicList = ({ id }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
   const artists = useSelector((state) => state.artist);
 
   useEffect(() => {
@@ -64,13 +65,17 @@ const MusicList = ({ id }) => {
           Create
         </Button>
       </Box>
-
+      <Box>
+        <Typography sx={{ display: "flex", justifyContent: "center" }}>
+          Music List
+        </Typography>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="table layout">
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
+                backgroundColor: "pink",
                 minWidth: "80px",
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
@@ -140,7 +145,7 @@ const MusicList = ({ id }) => {
         color="primary"
         onChange={handleChange}
         itemsPerPage={itemsPerPage}
-        totalMusic={musics?.length}
+        totalmusics={musics?.length}
       />
     </>
   );

@@ -12,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { delArtist, initializeArtists } from "@/redux/reducers/artistReducer";
@@ -77,7 +78,11 @@ const ArtistList = () => {
           Create
         </Button>
       </Box>
-
+      <Box>
+        <Typography sx={{ display: "flex", justifyContent: "center" }}>
+          Artist List
+        </Typography>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table
           sx={{
@@ -91,8 +96,7 @@ const ArtistList = () => {
           <TableHead>
             <TableRow
               sx={{
-                backgroundColor: "rgb(250 500 500)",
-
+                backgroundColor: "pink",
                 fontWeight: "bold",
                 textTransform: "uppercase",
                 letterSpacing: "1px",
@@ -136,7 +140,6 @@ const ArtistList = () => {
                 <TableCell align="left">{artist?.firstReleaseYear}</TableCell>
                 <TableCell align="left">{artist?.noOfAlbumsReleased}</TableCell>
                 <TableCell align="left">
-                  {" "}
                   {new Date(artist?.createdAt).toLocaleString(
                     "en-US",
                     options2
@@ -176,7 +179,7 @@ const ArtistList = () => {
         </Table>
       </TableContainer>
       <Pagination
-        style={{ position: "fixed", bottom: 50 }}
+        style={{ position: "fixed", bottom: 35 }}
         count={100}
         page={pageNumber}
         variant="outlined"
@@ -185,7 +188,7 @@ const ArtistList = () => {
         color="primary"
         onChange={handleChange}
         itemsPerPage={itemsPerPage}
-        totalArtists={artists?.length}
+        totalartists={artists?.length}
       />
     </>
   );

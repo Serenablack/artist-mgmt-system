@@ -56,7 +56,7 @@ const CreatePage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Create Page
+          Add user
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <Grid container spacing={2}>
