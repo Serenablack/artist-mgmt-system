@@ -1,46 +1,43 @@
 import { PrismaClient } from "@prisma/client";
+import tokenExtractor from "@/middleware/tokenExtractor";
 
 const prisma = new PrismaClient({ log: ["query"] });
-export default async function handler(req, res) {
-  const { method } = req;
+async function handler(req, res) {
+  if (req.method === "PUT") {
+    try {
+      const {
+        id,
+        name,
+        dob,
+        gender,
+        address,
+        firstReleaseYear,
+        noOfAlbumsReleased,
+      } = req.body.data;
 
-  switch (method) {
-    case "PUT":
-      try {
-        const {
-          id,
+      const artist = await prisma.artist.update({
+        where: {
+          id: Number(id),
+        },
+
+        data: {
+          id: Number(id),
+
           name,
           dob,
           gender,
           address,
           firstReleaseYear,
           noOfAlbumsReleased,
-        } = req.body.data;
+        },
+      });
 
-        const artist = await prisma.artist.update({
-          where: {
-            id: Number(id),
-          },
+      res.status(203).json(artist);
+    } catch (error) {
+      return res.status(400).json({ success: false });
+    }
 
-          data: {
-            id: Number(id),
-
-            name,
-            dob,
-            gender,
-            address,
-            firstReleaseYear,
-            noOfAlbumsReleased,
-          },
-        });
-
-        res.status(203).json(artist);
-      } catch (error) {
-        return res.status(400).json({ success: false });
-      }
-      break;
-
-    case "DELETE":
+    if (req.method === "DELETE") {
       try {
         const deleteArtist = await prisma.artist.delete({
           where: {
@@ -52,6 +49,7 @@ export default async function handler(req, res) {
       } catch (error) {
         res.status(400).json({ success: false });
       }
-      break;
+    }
   }
 }
+export default tokenExtractor(handler);
