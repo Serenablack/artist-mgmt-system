@@ -171,7 +171,7 @@ const ArtistList = () => {
       <Box sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
         <Pagination
           showPrevButton
-          style={{ position: "fixed", bottom: 30 }}
+          style={{ position: "fixed", bottom: 18 }}
           count={totalPages}
           page={pageNumber}
           variant="outlined"
@@ -179,7 +179,7 @@ const ArtistList = () => {
           size="large"
           color="primary"
           onChange={handleChange}
-        />{" "}
+        />
       </Box>
     </>
   );
