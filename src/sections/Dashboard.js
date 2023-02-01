@@ -23,7 +23,7 @@ import { logUser } from "@/redux/reducers/loginReducer";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     dispatch(initializeUsers());
@@ -44,22 +44,13 @@ const Dashboard = () => {
     setPageNumber(p);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    color: "red",
-    bgcolor: "white",
-    boxShadow: 30,
-    p: 4,
-  };
-
   const Users = useSelector((state) => state.user);
 
   const startIndex = (pageNumber - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const users = Users?.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(Users.length / itemsPerPage);
 
   const { push } = useRouter();
   return (
@@ -85,6 +76,7 @@ const Dashboard = () => {
             <TableRow
               sx={{
                 backgroundColor: "pink",
+                textTransform: "uppercase",
 
                 minWidth: "80px",
                 "&:last-child td, &:last-child th": {
@@ -145,21 +137,18 @@ const Dashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
       <Pagination
         style={{
           position: "fixed",
-          bottom: 50,
+          bottom: 35,
         }}
-        count={100}
+        count={totalPages}
         page={pageNumber}
         variant="outlined"
         shape="rounded"
         size="large"
-        // color="primary"
+        color="primary"
         onChange={handleChange}
-        itemsPerPage={itemsPerPage}
-        totalusers={users?.length}
       />
     </>
   );

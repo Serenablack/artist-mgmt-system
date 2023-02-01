@@ -20,7 +20,7 @@ import { delArtist, initializeArtists } from "@/redux/reducers/artistReducer";
 const ArtistList = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     dispatch(initializeArtists());
@@ -47,16 +47,6 @@ const ArtistList = () => {
     setPageNumber(p);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    color: "red",
-    bgcolor: "white",
-    boxShadow: 30,
-    p: 4,
-  };
   const { push } = useRouter();
   const Artists = useSelector((state) => state.artist);
   const handleClick = (id) => {
@@ -66,6 +56,8 @@ const ArtistList = () => {
   const startIndex = (pageNumber - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const artists = Artists?.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(Artists.length / itemsPerPage);
+
   return (
     <>
       <Box sx={{ pt: 4 }}>
@@ -87,8 +79,6 @@ const ArtistList = () => {
         <Table
           sx={{
             minWidth: 650,
-            color: "#ffffff",
-            padding: "5px 10px",
             borderRadius: "3px",
           }}
           aria-label="table layout"
@@ -179,16 +169,15 @@ const ArtistList = () => {
         </Table>
       </TableContainer>
       <Pagination
-        style={{ position: "fixed", bottom: 35 }}
-        count={100}
+        showPrevButton
+        style={{ position: "fixed", bottom: 30 }}
+        count={totalPages}
         page={pageNumber}
         variant="outlined"
         shape="rounded"
         size="large"
         color="primary"
         onChange={handleChange}
-        itemsPerPage={itemsPerPage}
-        totalartists={artists?.length}
       />
     </>
   );
