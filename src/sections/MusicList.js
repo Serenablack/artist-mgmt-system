@@ -20,7 +20,7 @@ import { delMusic, initializeMusic } from "@/redux/reducers/musicReducer";
 const MusicList = ({ id }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
   const artists = useSelector((state) => state.artist);
 
   useEffect(() => {
@@ -137,17 +137,18 @@ const MusicList = ({ id }) => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Pagination
-        style={{ position: "fixed", bottom: 35 }}
-        count={totalPages}
-        page={pageNumber}
-        variant="outlined"
-        shape="rounded"
-        size="large"
-        color="primary"
-        onChange={handleChange}
-      />
+      <Box sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          style={{ position: "fixed", bottom: 35 }}
+          count={totalPages}
+          page={pageNumber}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          color="primary"
+          onChange={handleChange}
+        />
+      </Box>
     </>
   );
 };

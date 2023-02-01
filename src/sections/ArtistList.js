@@ -168,17 +168,19 @@ const ArtistList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Pagination
-        showPrevButton
-        style={{ position: "fixed", bottom: 30 }}
-        count={totalPages}
-        page={pageNumber}
-        variant="outlined"
-        shape="rounded"
-        size="large"
-        color="primary"
-        onChange={handleChange}
-      />
+      <Box sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          showPrevButton
+          style={{ position: "fixed", bottom: 30 }}
+          count={totalPages}
+          page={pageNumber}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          color="primary"
+          onChange={handleChange}
+        />{" "}
+      </Box>
     </>
   );
 };

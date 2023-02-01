@@ -23,7 +23,7 @@ import { logUser } from "@/redux/reducers/loginReducer";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     dispatch(initializeUsers());
@@ -137,19 +137,23 @@ const Dashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Pagination
-        style={{
-          position: "fixed",
-          bottom: 35,
-        }}
-        count={totalPages}
-        page={pageNumber}
-        variant="outlined"
-        shape="rounded"
-        size="large"
-        color="primary"
-        onChange={handleChange}
-      />
+
+      <Box sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          style={{
+            position: "fixed",
+            flex: 1,
+            bottom: 35,
+          }}
+          count={totalPages}
+          page={pageNumber}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          color="primary"
+          onChange={handleChange}
+        />
+      </Box>
     </>
   );
 };
