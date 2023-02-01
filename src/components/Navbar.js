@@ -50,7 +50,7 @@ const Navbar = () => {
               <Button sx={{ color: "white" }} onClick={() => push("/artist")}>
                 Artist
               </Button>
-            </Box>{" "}
+            </Box>
             <Box display="flex" alignItems="center" gap={1.5}>
               <Avatar />
               <Typography variant="overline">

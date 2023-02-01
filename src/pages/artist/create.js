@@ -11,7 +11,7 @@ export default function ArtistCreatePage() {
     if (!userLocal) {
       push("/");
     }
-  }, []);
+  });
   const userLocal = Cookies.get("userLocal");
 
   if (userLocal) {
