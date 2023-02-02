@@ -51,7 +51,7 @@ const MusicList = ({ id }) => {
   const startIndex = (pageNumber - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const musics = Musics?.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(Musics.length / itemsPerPage);
+  const totalPages = Math.ceil(Musics?.length / itemsPerPage);
 
   const { push } = useRouter();
   return (

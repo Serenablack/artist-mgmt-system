@@ -56,7 +56,7 @@ const ArtistList = () => {
   const startIndex = (pageNumber - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const artists = Artists?.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(Artists.length / itemsPerPage);
+  const totalPages = Math.ceil(Artists?.length / itemsPerPage);
 
   return (
     <>

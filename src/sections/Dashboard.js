@@ -50,7 +50,7 @@ const Dashboard = () => {
   const endIndex = startIndex + itemsPerPage;
   const users = Users?.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(Users.length / itemsPerPage);
+  const totalPages = Math.ceil(Users?.length / itemsPerPage);
 
   const { push } = useRouter();
   return (
