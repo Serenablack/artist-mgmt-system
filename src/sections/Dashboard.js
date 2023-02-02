@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { delUser, initializeUsers } from "@/redux/reducers/userReducer";
 import { logUser } from "@/redux/reducers/loginReducer";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,11 @@ const Dashboard = () => {
 
   const hanldeDelete = async (user) => {
     await dispatch(delUser(user));
+    const userCookies = JSON.parse(Cookies.get("userLocal"));
+    if (user.id === userCookies?.userFound.id) {
+      Cookies.remove("userLocal");
+      push("/");
+    }
   };
 
   const handleChange = (e, p) => {
